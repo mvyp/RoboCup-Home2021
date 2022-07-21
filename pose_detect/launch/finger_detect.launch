@@ -1,0 +1,19 @@
+<launch>
+
+  <!-- Add kinect node -->
+  <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" />
+
+  <!-- Add Robot Model -->
+  <include file="$(find wpb_home_bringup)/launch/normal.launch" />
+
+  <!-- Openpose tf -->
+  <include file="$(find tfpose_ros)/launch/demo_video.launch" />
+  
+  <include file="$(find darknet_ros)/launch/darknet_ros.launch"/>
+
+  <!-- Specific Pose Detect -->
+  <node name="what_is_that_arm" pkg="what_is_that" type="what_is_that_arm.py" output="screen" required="true"/>
+
+  <node pkg="rviz" name="rviz" type="rviz" args="-d $(find pose_detect)/rviz/finger.rviz" />
+
+</launch>

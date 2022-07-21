@@ -1,0 +1,52 @@
+<launch>
+  <master auto="start"/>
+
+  <!-- have to change the path of image(pgm) in map.yaml file -->
+  <arg name="map_file" default="$(find robot_navigation)/maps/hotel.yaml"/>
+  <arg name="scan_name" default="scan_raw"/>
+  <!--arg name="scan_name" default="scan"/-->
+
+  <!-- Run wpb_home core -->
+  <node pkg="wpb_home_bringup" type="wpb_home_core" name="wpb_home_core" output="screen">
+    <param name="serial_port" type="string" value="/dev/ftdi"/> 
+    <rosparam file="$(find wpb_home_bringup)/config/wpb_home.yaml" command="load" />
+  </node>
+
+  <!--- Run Rplidar -->
+  <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+    <param name="serial_port"         type="string" value="/dev/rplidar"/>  
+    <param name="serial_baudrate"     type="int"    value="256000"/>
+    <param name="frame_id"            type="string" value="laser"/>
+    <param name="inverted"            type="bool"   value="false"/>
+    <param name="angle_compensate"    type="bool"   value="true"/>
+    <remap from="scan" to="$(arg scan_name)"/>
+  </node>
+
+  <!-- Run lidar filter -->
+  <node pkg="wpb_home_bringup" type="wpb_home_lidar_filter" name="wpb_home_lidar_filter">
+    <param name="pub_topic" value="/scan"/>
+  </node>
+
+  <!-- Run the map server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
+
+  <!-- Run AMCL -->
+  <include file="$(find robot_navigation)/launch/amcl_omni.launch" />
+
+  <!--- Run move base -->
+  <include file="$(find robot_navigation)/launch/move_base.launch" />
+
+  <!-- RViz and TF tree -->
+  <arg name="model" default="$(find wpb_home_bringup)/urdf/wpb_home_mani.urdf"/>
+  <arg name="gui" default="false" />
+  <arg name="rvizconfig" default="$(find wpb_home_tutorials)/rviz/nav.rviz" />
+
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+  <param name="use_gui" value="$(arg gui)"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+  <!--Set initial pose and goals-->
+  <node name="test_nav" pkg="robot_navigation"  type="test_nav"  output="screen"/>
+</launch>

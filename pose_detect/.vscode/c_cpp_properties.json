@@ -1,0 +1,35 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/sie-rc/voice_ws/devel/include/**",
+        "/home/sie-rc/yolo_ws/devel/include/**",
+        "/home/sie-rc/realsense_ws/devel/include/**",
+        "/home/sie-rc/robocup_ws/devel/include/**",
+        "/home/sie-rc/carto_ws/install_isolated/include/**",
+        "/home/sie-rc/wpb_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/sie-rc/yolo_ws/src/darknet_ros/darknet_ros/include/**",
+        "/home/sie-rc/robocup_ws/src/detect_control_grab/include/**",
+        "/home/sie-rc/driver_ws/src/iai_kinect2/kinect2_bridge/include/**",
+        "/home/sie-rc/driver_ws/src/iai_kinect2/kinect2_calibration/include/**",
+        "/home/sie-rc/driver_ws/src/iai_kinect2/kinect2_registration/include/**",
+        "/home/sie-rc/robocup_ws/src/pose_detect/include/**",
+        "/home/sie-rc/realsense_ws/src/realsense-ros/realsense2_camera/include/**",
+        "/home/sie-rc/robocup_ws/src/robot_navigation/include/**",
+        "/home/sie-rc/voice_ws/src/robot_voice/include/**",
+        "/home/sie-rc/wpb_ws/src/wpb_home/wpb_home_bringup/include/**",
+        "/home/sie-rc/wpb_ws/src/wpb_home/wpb_home_tutorials/include/**",
+        "/home/sie-rc/wpb_ws/src/wpb_home/wpbh_local_planner/include/**",
+        "/home/sie-rc/voice_ws/src/xf_mic_asr_offline/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
